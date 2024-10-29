@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "final demo",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --env-file=.env . ",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongoose": "^8.7.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.7"
