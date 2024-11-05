@@ -1,6 +1,6 @@
 import express from 'express';
-import { hasPermission, isAuthenticated } from '../middlewares/auth';
-import { getProfile, getUserProfile, registerUser, signInUser, updateProfile } from '../controllers/user';
+import { hasPermission, isAuthenticated } from '../middlewares/auth.js';
+import { getProfile, getUserProfile, registerUser, signInUser, updateProfile } from '../controllers/user.js';
 
 
 const userRouter = express.Router();
@@ -16,3 +16,5 @@ userRouter.patch('/users/me', isAuthenticated, hasPermission('update_profile'),u
 userRouter.post('/users/register', registerUser);
 
 userRouter.post('/users/signIn', signInUser);
+
+export default userRouter;
