@@ -33,7 +33,7 @@ export const registerUser = async (req, res, next) => {
           })
 
         // Respond to request
-        res.status(200).json('Welcome to AsthmaSync!');
+        res.status(200).json(`Registration successful! Welcome to AsthmaSync, ${value.name}!`);
 
         
     } catch (error) {
@@ -128,4 +128,3 @@ export const updateProfile = async ( req, rs, next) => {
     }
 
 }
-
