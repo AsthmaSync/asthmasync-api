@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 
 //Connect to database
-await mongoose.connect(process.env.MONGO_URI);
+// await mongoose.connect(process.env.MONGO_URI);
 
 //Create Express app
 const app = express();
