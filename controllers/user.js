@@ -19,7 +19,7 @@ export const registerUser = async (req, res, next) => {
         }
         //Hash their password
         const hashedPasswords = bcrypt.hashSync(value.password, 10);
-        //Save usr into database
+        //Save user into database
         await UserModel.create({
             ...value,
             password: hashedPasswords
@@ -99,8 +99,13 @@ export const updateProfile = async (req, res, next) => {
             return res.status(422).json(error);
 
         }
+        // Check if password update is requested
+        if (value.password) {
+            // Hash the password before updating
+            value.password = bcrypt.hashSync(value.password, 10);
+        }
 
-        await UserModel.findByIdAndUpdate(req.auth.id, value);
+        await UserModel.findByIdAndUpdate(req.auth.id, value, { new: true });
         res.json('Profile Updated!')
 
     } catch (error) {
