@@ -1,6 +1,6 @@
 export const permissions = [
     {
-        roles:'user',
+        role:'user',
         actions : [
             'get_profile',
             'update_profile',

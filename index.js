@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/user.js"; 
+import { mailtransporter } from "./utils/mail.js";
 
 
 
@@ -19,6 +20,15 @@ app.use(cors());
 
 //Define routes
 app.use(userRouter); 
+
+mailtransporter.verify((error, success) => {
+    if (error) {
+        console.error("SMTP connection error:", error);
+    } else {
+        console.log("SMTP connection successful");
+    }
+});
+
 
 
 //Listen to server
