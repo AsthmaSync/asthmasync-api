@@ -1,15 +1,15 @@
 import Joi from "joi";
 
 export const addSymptomValidator = Joi.object({
-    symptoms : Joi.string().required(),
-    notes : Joi.string().required(),
+    title : Joi.string().required().min(1),
+    notes : Joi.string().required().min(5),
+    date: Joi.date().required().max('now')
 
 
 });
 
 export const updateSymptomValidator = Joi.object ({
-    symptoms: Joi.string(),
-    notes: Joi.string(),
-    
+    title : Joi.string().min(1),
+    notes : Joi.string().min(5) 
 
 })

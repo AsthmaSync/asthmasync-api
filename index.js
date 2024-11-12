@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRouter from "./routes/user.js"; 
 import { mailtransporter } from "./utils/mail.js";
+import triggerRouter from "./routes/triggers.js";
+import symptomRouter from "./routes/symptoms.js";
+import medicationRouter from "./routes/medication.js";
 
 
 
@@ -20,6 +23,9 @@ app.use(cors());
 
 //Define routes
 app.use(userRouter); 
+app.use(triggerRouter)
+app.use(symptomRouter)
+app.use(medicationRouter)
 
 mailtransporter.verify((error, success) => {
     if (error) {

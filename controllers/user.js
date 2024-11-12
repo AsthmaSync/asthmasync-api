@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailtransporter } from "../utils/mail.js";
+import { TriggersModel } from "../models/triggers.js";
 
 
 
@@ -118,7 +119,7 @@ export const updateProfile = async (req, res, next) => {
 export const getUserProfile = async (req, res, next) => {
     try {
         const { filter = "{}", limit = 10, skip = 0, sort = "{}" } = req.query;
-        const profile = await UserModel
+        const profile = await TriggersModel
             .find({
                 ...JSON.parse(filter),
                 user: req.auth.id

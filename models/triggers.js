@@ -1,19 +1,20 @@
-import { Schema , model} from "mongoose";
-import {toJson} from "@reis/mongoose-to-json";
+import { Schema , model, Types} from "mongoose";
+import { toJSON } from "@reis/mongoose-to-json";
 
 
-const triggersSchema = new Schema ({
-    triggers :{type:String, required:true},
+
+const TriggersSchema = new Schema ({
+    title:{type:String, required:true},
     notes: {type:String, required:true},
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    user: { type: Types.ObjectId, ref: 'User', required: true },
     date: { type: Date, default: Date.now },
 
     },  {
         timestamps: true
     });
 
-    triggersSchema.plugin(toJson)
+    TriggersSchema.plugin(toJSON)
 
-    export const triggersModel = model('Trigger', triggersSchema)
+    export const TriggersModel = model('Trigger', TriggersSchema)
 
 

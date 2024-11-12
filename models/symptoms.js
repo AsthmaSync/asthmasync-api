@@ -1,11 +1,11 @@
-import { Schema , model} from "mongoose";
+import { Schema , model, Types} from "mongoose";
 import { toJSON } from "@reis/mongoose-to-json";
 
 const symptomsSchema = new Schema ({
-    symptoms :{type:String, required:true},
+    title :{type:String, required:true},
     notes: {type:String, required:true},
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     date: { type: Date, default: Date.now },
+    user: { type: Types.ObjectId, ref: 'User', required: true }
 
     }, {
         timestamps: true 
@@ -13,4 +13,4 @@ const symptomsSchema = new Schema ({
 
     symptomsSchema.plugin(toJSON)
 
-export const symptomsModel = model('Symptom', symptomsSchema)
+export const SymptomsModel = model('Symptom', symptomsSchema)
