@@ -6,8 +6,8 @@ import { toJSON } from "@reis/mongoose-to-json";
 const TriggersSchema = new Schema ({
     title:{type:String, required:true},
     notes: {type:String, required:true},
-    user: { type: Types.ObjectId, ref: 'User', required: true },
     date: { type: Date, default: Date.now },
+    user: { type: Types.ObjectId, ref: 'User', required: true },
 
     },  {
         timestamps: true

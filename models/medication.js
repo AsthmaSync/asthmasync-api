@@ -7,8 +7,7 @@ const medicationSchema = new Schema({
     frequency: { type: String, required: true , enum: ["daily", "weekly", "monthly"], lowercase: true, },
     startDate: { type: Date, required: true },
     endDate: { type: Date },
-    purpose: { type: String, enum: ["preventive", "reliever"], required: true },
-    // notes: { type: String, trim: true },  
+    purpose: { type: String, enum: ["preventive", "reliever"], required: true },  
     taken: { type: Boolean, required: true, default: false },
     dosageTaken: { type: Number, required: true },
     user: { type: Types.ObjectId, ref: 'User', required: true }

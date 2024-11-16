@@ -9,5 +9,6 @@ export const addTriggerValidator = Joi.object({
 export const updateTriggerValidator = Joi.object({
     title : Joi.string().min(1),
     notes: Joi.string().min(5),
+    date :Joi.date().max('now')
 });
 

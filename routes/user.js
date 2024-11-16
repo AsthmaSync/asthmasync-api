@@ -1,6 +1,6 @@
 import express from 'express';
 import { hasPermission, isAuthenticated } from '../middlewares/auth.js';
-import { getProfile, getUserProfile, registerUser, signInUser, updateProfile } from '../controllers/user.js';
+import { getProfile, getUserData, registerUser, signInUser, updateProfile } from '../controllers/user.js';
 
 
 const userRouter = express.Router();
@@ -9,7 +9,7 @@ const userRouter = express.Router();
 
 userRouter.get('/users/me', isAuthenticated, hasPermission('get_profile'), getProfile);
 
-userRouter.get('/users/me/dashboard', isAuthenticated, getUserProfile);
+userRouter.get('/users/me/dashboard', isAuthenticated, getUserData);
 
 userRouter.patch('/users/me', isAuthenticated, hasPermission('update_profile'),updateProfile);
 

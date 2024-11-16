@@ -8,8 +8,7 @@ export const addMedicationValidator = Joi.object ({
     startDate : Joi.date().required(),
     endDate : Joi.date().greater(Joi.ref("startDate")),
     purpose : Joi.string().required().valid('preventive', 'reliever'),
-    taken : Joi.boolean().required(),
-    dosageTaken : Joi.number().required().min(0)
+    
 
 });
 

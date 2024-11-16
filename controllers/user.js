@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailtransporter } from "../utils/mail.js";
 import { TriggersModel } from "../models/triggers.js";
+import {SymptomsModel} from "../models/symptoms.js"
+import {MedicationModel} from "../models/medication.js"
 
 
 
@@ -115,23 +117,39 @@ export const updateProfile = async (req, res, next) => {
     }
 }
 
-
-export const getUserProfile = async (req, res, next) => {
+export const getUserData = async (req, res, next) => {
     try {
         const { filter = "{}", limit = 10, skip = 0, sort = "{}" } = req.query;
-        const profile = await TriggersModel
-            .find({
-                ...JSON.parse(filter),
-                user: req.auth.id
-            })
-            .sort(JSON.parse(sort))
-            .limit(limit)
-            .skip(skip);
 
-        res.status(200).json(profile);
+        // Parse the query parameters
+        const parsedFilter = JSON.parse(filter);
+        const parsedSort = JSON.parse(sort);
+
+        // Fetch data from all collections concurrently
+        const [triggers, symptoms, medication] = await Promise.all([
+            TriggersModel.find({ ...parsedFilter, user: req.auth.id })
+                .sort(parsedSort)
+                .limit(limit)
+                .skip(skip),
+            SymptomsModel.find({ ...parsedFilter, user: req.auth.id })
+                .sort(parsedSort)
+                .limit(limit)
+                .skip(skip),
+            MedicationModel.find({ ...parsedFilter, user: req.auth.id })
+                .sort(parsedSort)
+                .limit(limit)
+                .skip(skip)
+        ]);
+
+        // Combine the results into a single response
+        res.status(200).json({
+            triggers,
+            symptoms,
+            medication
+        });
 
     } catch (error) {
-        next(error)
-
+        next(error); // Pass the error to the error-handling middleware
     }
-}
+};
+

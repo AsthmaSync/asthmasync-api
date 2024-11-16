@@ -10,6 +10,7 @@ export const addSymptomValidator = Joi.object({
 
 export const updateSymptomValidator = Joi.object ({
     title : Joi.string().min(1),
-    notes : Joi.string().min(5) 
+    notes : Joi.string().min(5),
+    date: Joi.date().max('now')
 
 })
