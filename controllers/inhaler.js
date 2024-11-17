@@ -29,14 +29,14 @@ export const addInhaler = async (req, res, next) => {
             return res.status(422).json({ message: 'Invalid input.', details: error.details });
         }
 
-        const { inhalerName, totalPuffs } = value;
+        const { inhalerName, oriTotal } = value;
 
-        const newTotal = totalPuffs;
+        const newTotal = oriTotal;
 
         const inhalerEntry = await InhalerModel.create({
             user: req.auth.id,
             inhalerName,
-            oriTotal: totalPuffs, // Fixed total puffs
+            oriTotal , // Fixed total puffs
             newTotal, 
         });
 
