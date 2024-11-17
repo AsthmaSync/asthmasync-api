@@ -82,24 +82,28 @@ export const recordPuffUsage = async (req, res, next) => {
 
         const { inhalerId, puffsUsed } = value;
 
+        // Find the inhaler based on the inhalerId
         const inhaler = await InhalerModel.findById(inhalerId);
 
         if (!inhaler) {
             return res.status(404).json({ message: "Inhaler not found" });
         }
 
+        // Check if enough puffs are available in the inhaler
         if (inhaler.newTotal < puffsUsed) {
             return res.status(400).json({ message: "Not enough puffs left in the inhaler" });
         }
 
-        // Update total puffs
+        // Update the remaining puffs (newTotal)
         inhaler.newTotal -= puffsUsed;
+
+        // Save the updated inhaler document
         await inhaler.save();
 
         res.status(201).json({
             message: `Recorded ${puffsUsed} puff(s) used from inhaler "${inhaler.inhalerName}".`,
             remainingPuffs: inhaler.newTotal,
-            originalTotalPuffs: inhaler.oriTotal
+            originalTotalPuffs: inhaler.oriTotal // You still want to show the original total
         });
     } catch (error) {
         next(error);
@@ -107,27 +111,30 @@ export const recordPuffUsage = async (req, res, next) => {
 };
 
 
-
 export const getInhalerDetails = async (req, res, next) => {
     try {
+        // Find the inhaler by its ID and ensure it belongs to the authenticated user
         const inhaler = await InhalerModel.findOne({
             _id: req.params.inhalerId,
             user: req.auth.id
         });
 
+        // If no inhaler is found, return a 404 error
         if (!inhaler) {
             return res.status(404).json({ message: "Inhaler not found" });
         }
 
+        // Respond with the inhaler details, including the inhaler name and puff information
         res.status(200).json({
             message: "Inhaler details retrieved successfully.",
             inhaler: {
                 inhalerName: inhaler.inhalerName,
-                remainingPuffs: inhaler.newTotal,
-                originalTotalPuffs: inhaler.oriTotal
+                remainingPuffs: inhaler.newTotal,   // Remaining puffs available
+                originalTotalPuffs: inhaler.oriTotal // Fixed total puffs
             }
         });
     } catch (error) {
+        // Pass the error to the next middleware (error handler)
         next(error);
     }
 };

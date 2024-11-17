@@ -4,13 +4,14 @@ const InhalerSchema = new Schema({
     user: { type: Types.ObjectId, ref: 'User', required: true },
     inhalerName: { type: String, required: true },
     oriTotal: { type: Number, min: 1, required: true }, // Fixed total puffs
-    newTotal: { type: Number, min: 1, required: true }, // Remaining puffs (initialized to oriTotal)
+    newTotal: { type: Number, min: 1 }, // Remaining puffs, initialized to oriTotal (not required initially)
     date: { type: Date, default: Date.now }
 }, {
     timestamps: true
 });
 
 export const InhalerModel = model('Inhaler', InhalerSchema);
+
 
 
 
