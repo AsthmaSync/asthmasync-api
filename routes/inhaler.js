@@ -22,7 +22,7 @@ inhalerRouter.delete('/inhalers/:id', isAuthenticated, hasPermission('delete_puf
 
 // inhalerRouter.post('/puffs-usage', isAuthenticated,hasPermission('post_puff_usage'), recordPuffUsage);
 
-inhalerRouter.get('/inhalers/:id', isAuthenticated,hasPermission('get_puff_usage_id'), getInhalerDetails);
+inhalerRouter.get('/inhalers/:inhalerId', isAuthenticated,hasPermission('get_puff_usage_id'), getInhalerDetails);
 
 
 
