@@ -1,5 +1,5 @@
 import InhalerModel from '../models/inhaler.js';
-// import MedicationModel from '../models/medication.js';
+import MedicationModel from '../models/medication.js';
 import { puffUsageValidator } from '../validators/inhaler.js';
 
 
@@ -28,42 +28,42 @@ export const getPuffUsage = async (req, res, next) => {
 
 
 
-// export const recordPuffUsage = async (req, res, next) => {
-//     try {
-//         // Validate the input
-//         const { error, value } = puffUsageValidator.validate(req.body);
-//         if (error) {
-//             return res.status(422).json({ message: 'Invalid input.', details: error.details });
-//         }
+export const addInhaler = async (req, res, next) => {
+    try {
+        // Validate the input
+        const { error, value } = puffUsageValidator.validate(req.body);
+        if (error) {
+            return res.status(422).json({ message: 'Invalid input.', details: error.details });
+        }
 
-//         const { medication, puffs } = value;
+        const { medication, puffs } = value;
 
-//         // Verify the medication exists and belongs to the user
-//         const medicationRecord = await MedicationModel.findOne({
-//             _id: medication,
-//             user: req.auth.id
-//         });
+        // Verify the medication exists and belongs to the user
+        const medicationRecord = await MedicationModel.findOne({
+            _id: medication,
+            user: req.auth.id
+        });
 
-//         if (!medicationRecord) {
-//             return res.status(404).json({ message: "Medication not found or doesn't belong to the user." });
-//         }
+        if (!medicationRecord) {
+            return res.status(404).json({ message: "Medication not found or doesn't belong to the user." });
+        }
 
-//         // Record the puff usage
-//         const puffUsageEntry = await PuffUsageModel.create({
-//             user: req.auth.id,
-//             medication,
-//             puffs,
-//         });
+        // Record the puff usage
+        const puffUsageEntry = await PuffUsageModel.create({
+            user: req.auth.id,
+            medication,
+            puffs,
+        });
 
-//         // Send a response with the new entry
-//         res.status(201).json({
-//             message: `Successfully recorded ${puffs} puff(s) for medication "${medicationRecord.name}".`,
-//             puffUsage: puffUsageEntry
-//         });
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+        // Send a response with the new entry
+        res.status(201).json({
+            message: `Successfully recorded ${puffs} puff(s) for medication "${medicationRecord.name}".`,
+            puffUsage: puffUsageEntry
+        });
+    } catch (error) {
+        next(error);
+    }
+};
 
 export const updatePuffUsage = async (req, res, next) => {
     try {
