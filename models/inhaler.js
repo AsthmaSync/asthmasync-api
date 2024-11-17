@@ -3,9 +3,9 @@ import { model, Schema, Types } from "mongoose";
 
 const InhalerSchema = new Schema({
     user: { type: Types.ObjectId, ref: 'User', required: true },
-    inhalerId: { type: Types.ObjectId, ref: 'Inhaler', required: true },
+    inhalerId: { type: Types.ObjectId, ref: 'Inhaler'},
     inhalerName: {type: String, required:true},
-    oriTotal: { type: Number, required: true, min: 1 },
+    oriTotal: { type: Number, min: 1 },
     newTotal: { type: Number, min: 1 },
     date: { type: Date, default: Date.now }
 }, {
