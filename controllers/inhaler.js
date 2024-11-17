@@ -31,11 +31,13 @@ export const addInhaler = async (req, res, next) => {
 
         const { inhalerName, totalPuffs } = value;
 
+        const newTotal = totalPuffs;
+
         const inhalerEntry = await InhalerModel.create({
             user: req.auth.id,
             inhalerName,
-            newTotal, // Remaining puffs
-            oriTotal: totalPuffs // Fixed total
+            oriTotal: totalPuffs, // Fixed total puffs
+            newTotal, 
         });
 
         res.status(201).json({
