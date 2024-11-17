@@ -41,7 +41,7 @@ export const addInhaler = async (req, res, next) => {
         });
 
         res.status(201).json({
-            message: `Inhaler "${inhalerName}" added with ${totalPuffs} total puffs.`,
+            message: `Inhaler "${inhalerName}" added with ${oriTotal} total puffs.`,
             inhaler: inhalerEntry
         });
     } catch (error) {
