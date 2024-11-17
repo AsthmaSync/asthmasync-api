@@ -1,12 +1,16 @@
 import Joi from 'joi';
 
-export const puffUsageValidator = Joi.object({
-    medication: Joi.string().required(), // Medication ID
-    puffs: Joi.number().integer().positive().required() // Number of puffs
+
+
+export const addInhalerValidator = Joi.object({
+    inhalerName: Joi.string().required(),
+    oriTotal: Joi.number().min(1).required()
 });
 
 
-export const updatePuffValidator = Joi.object({
-    medication: Joi.string().required(), // Medication ID
-    puffs: Joi.number().integer().positive().required() // Number of puffs
+
+export const recordPuffUsageValidator = Joi.object({
+    inhalerName: Joi.string().required(),
+    // inhalerId: Joi.string(),
+    puffsUsed: Joi.number().min(1).required()
 });

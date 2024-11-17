@@ -6,6 +6,7 @@ import { mailtransporter } from "./utils/mail.js";
 import triggerRouter from "./routes/triggers.js";
 import symptomRouter from "./routes/symptoms.js";
 import medicationRouter from "./routes/medication.js";
+import inhalerRouter from "./routes/inhaler.js";
 
 
 
@@ -26,6 +27,7 @@ app.use(userRouter);
 app.use(triggerRouter)
 app.use(symptomRouter)
 app.use(medicationRouter)
+app.use(inhalerRouter)
 
 mailtransporter.verify((error, success) => {
     if (error) {
