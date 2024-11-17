@@ -23,6 +23,11 @@ export const permissions = [
             'get_medication_id',
             'delete_medication',
             'delete_medication_id',
+            'post_puff_usage',
+            'get_puff_usage',
+            'get_puff_usage_id',
+            'delete_puff_usage_id',
+
             
         ]
     },
@@ -37,7 +42,10 @@ export const permissions = [
             'post_triggers',
             'get_triggers_id',
             'post_medicatino',
-            'get_medication_id'
+            'get_medication_id',
+            'post_puff_usage',
+            'get_puff_usage_id',
+            'delete_puff_usage_id',
             
         ]
     },
@@ -47,7 +55,8 @@ export const permissions = [
             'get_profile',
             'get_symptoms_id',
             'get_triggers_id',
-            'get_medication_id'
+            'get_medication_id',
+            'get_puff_usage_id',
             
         ]
     }

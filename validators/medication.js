@@ -7,9 +7,8 @@ export const addMedicationValidator = Joi.object ({
     frequency : Joi.string().required().valid('daily', 'weekly', 'monthly'),
     startDate : Joi.date().required(),
     endDate : Joi.date().greater(Joi.ref("startDate")),
-    purpose : Joi.string().required().valid('preventive', 'reliever'),
+    purpose : Joi.string().required().valid('preventive', 'reliever')
     
-
 });
 
 export const updateMedicationValidator = Joi.object ({
@@ -19,7 +18,7 @@ export const updateMedicationValidator = Joi.object ({
     startDate : Joi.date(),
     endDate : Joi.date().greater(Joi.ref("startDate")),
     purpose : Joi.string().valid('preventive', 'reliever'),
-    taken : Joi.boolean(),
-    dosageTaken : Joi.number().min(0)
+    taken : Joi.boolean().required(),
+    dosageTaken : Joi.number().min(0).required(),
 
 });

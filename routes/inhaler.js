@@ -1,0 +1,35 @@
+import { Router } from "express";
+import { hasPermission, isAuthenticated } from "../middlewares/auth.js";
+import { countPuffUsage, deletePuffUsage, getPuffUsage, getRemainingPuffs, recordPuffUsage, updatePuffUsage } from "../controllers/inhaler.js";
+
+
+
+//Create a router
+const inhalerRouter = Router();
+
+
+//Define routes
+
+inhalerRouter.post('/inhalers', isAuthenticated, hasPermission('post_medication'),  recordPuffUsage);
+
+inhalerRouter.get('/inhalers', getPuffUsage);
+
+inhalerRouter.get('/inhalers/count', countPuffUsage);
+
+inhalerRouter.patch('/inhalers/:id', isAuthenticated, hasPermission('update_medication'), updatePuffUsage);
+
+inhalerRouter.delete('/inhalers/:id', isAuthenticated, hasPermission('delete_medication'), deletePuffUsage);
+
+inhalerRouter.post('/puffs-usage', isAuthenticated,hasPermission('post_puff_usage'), recordPuffUsage);
+
+inhalerRouter.get('/puffs-usage/:id/', isAuthenticated,hasPermission('get_puff_usage_id'), getRemainingPuffs);
+
+
+
+
+
+
+
+//Export Router
+export default inhalerRouter;
+

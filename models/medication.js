@@ -8,8 +8,8 @@ const medicationSchema = new Schema({
     startDate: { type: Date, required: true },
     endDate: { type: Date },
     purpose: { type: String, enum: ["preventive", "reliever"], required: true },  
-    taken: { type: Boolean, required: true, default: false },
-    dosageTaken: { type: Number, required: true },
+    taken: { type: Boolean, default: false },
+    dosageTaken: { type: Number },
     user: { type: Types.ObjectId, ref: 'User', required: true }
 }, {
     timestamps: true

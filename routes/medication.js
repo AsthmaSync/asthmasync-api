@@ -23,7 +23,5 @@ medicationRouter.delete('/medications/:id', isAuthenticated, hasPermission('dele
 
 
 
-
-
 //Export Router
 export default medicationRouter;
