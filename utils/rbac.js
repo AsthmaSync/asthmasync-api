@@ -23,6 +23,7 @@ export const permissions = [
             'get_medication_id',
             'delete_medication',
             'delete_medication_id',
+            'post_inhaler_medication',
             'post_puff_usage',
             'get_puff_usage',
             'get_puff_usage_id',

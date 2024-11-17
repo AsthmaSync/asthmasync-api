@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { hasPermission, isAuthenticated } from "../middlewares/auth.js";
-import { countPuffUsage, deletePuffUsage, getPuffUsage, getRemainingPuffs, recordPuffUsage, updatePuffUsage } from "../controllers/inhaler.js";
+import { addInhaler, countPuffUsage, deletePuffUsage, getPuffUsage, getRemainingPuffs, recordPuffUsage, updatePuffUsage } from "../controllers/inhaler.js";
 
 
 
@@ -10,7 +10,7 @@ const inhalerRouter = Router();
 
 //Define routes
 
-inhalerRouter.post('/inhalers', isAuthenticated, hasPermission('post_medication'),  recordPuffUsage);
+inhalerRouter.post('/inhalers', isAuthenticated, hasPermission('post_inhaler_medication'),  addInhaler);
 
 inhalerRouter.get('/inhalers', getPuffUsage);
 
