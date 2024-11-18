@@ -3,48 +3,70 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
 import { mailtransporter } from "../utils/mail.js";
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { TriggersModel } from "../models/triggers.js";
-import {SymptomsModel} from "../models/symptoms.js"
-import {MedicationModel} from "../models/medication.js"
+import {SymptomsModel} from "../models/symptoms.js";
+import {MedicationModel} from "../models/medication.js";
 
 
+
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export const registerUser = async (req, res, next) => {
     try {
+        // Validate request body
         const { error, value } = registerUserValidator.validate(req.body);
         if (error) {
-            return res.status(422).json(error);
+            return res.status(422).json({ error: error.details });
         }
-        //check if user doesn't exist
+
+        // Check if the user already exists
         const user = await UserModel.findOne({ email: value.email });
         if (user) {
-            return res.status(409).json('User already exist!');
+            return res.status(409).json({ message: 'User already exists!' });
         }
-        //Hash their password
-        const hashedPasswords = bcrypt.hashSync(value.password, 10);
-        //Save user into database
-        await UserModel.create({
+
+        // Hash the user's password
+        const hashedPassword = bcrypt.hashSync(value.password, 10);
+
+        // Save the new user into the database
+        const newUser = await UserModel.create({
             ...value,
-            password: hashedPasswords
+            password: hashedPassword
         });
 
-        // Send user confirmation email
-        await mailtransporter.sendMail({
-            from: 'gidodoom@gmail.com',
-            to: value.email,
-            subject: 'Welcome to AsthmaSync! Your Account is Ready! ',
-            text: 'Welcome to AsthmaSync – we’re thrilled to have you join our community!Your account has been successfully created, and you’re now ready to start tracking, monitoring, and managing your asthma more effectively'
-        })
+        // Load the email HTML template
+        let emailHtml;
+        try {
+            emailHtml = fs.readFileSync(path.join(__dirname, '../utils/regMail.html'), 'utf8');
+        } catch (fileError) {
+            console.error('Error reading email template:', fileError.message);
+            return res.status(500).json({ message: 'Error sending confirmation email.' });
+        }
 
-        // Respond to request
-        res.status(200).json(`Registration successful! Welcome to AsthmaSync, ${value.name}!`);
+        // Send confirmation email
+        try {
+            await mailtransporter.sendMail({
+                from: 'gidodoom@gmail.com',
+                to: value.email,
+                subject: 'Welcome to AsthmaSync! Your Account is Ready!',
+                html: emailHtml
+            });
+        } catch (emailError) {
+            console.error('Error sending email:', emailError.message);
+            return res.status(500).json({ message: 'Registration successful, but failed to send confirmation email.' });
+        }
 
-
+        // Respond with success message
+        res.status(200).json({ message: `Registration successful! Welcome to AsthmaSync, ${value.name}!` });
     } catch (error) {
         next(error);
-
     }
-}
+};
 
 
 export const signInUser = async (req, res, next) => {

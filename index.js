@@ -7,6 +7,7 @@ import triggerRouter from "./routes/triggers.js";
 import symptomRouter from "./routes/symptoms.js";
 import medicationRouter from "./routes/medication.js";
 import inhalerRouter from "./routes/inhaler.js";
+import sendNotifications from './utils/notification.js';
 
 
 
@@ -20,6 +21,11 @@ const app = express();
 //Middlewares
 app.use(express.json());
 app.use(cors());
+
+
+
+// Start the notification scheduler (runs periodically as defined in cron job)
+sendNotifications(); // This initializes the cron job and starts the periodic checks
 
 
 //Define routes

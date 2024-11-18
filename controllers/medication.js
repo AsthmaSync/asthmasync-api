@@ -33,35 +33,38 @@ export const getOneMedication = async (req, res, next) => {
 }
 
 export const addMedication = async (req, res, next) => {
-
     try {
-        // Validate user input
-        const { error, value } = addMedicationValidator.validate(req.body)
-
+        const { error, value } = addMedicationValidator.validate(req.body);
         if (error) {
-            return res.status(422).json(error)
+            return res.status(422).json(error);
         }
 
+        // Calculate the next notification date
+        const frequencyMap = {
+            daily: 1,
+            weekly: 7,
+            monthly: 30
+        };
 
-        // Enter medication using the request body
+        const nextNotification = new Date(value.startDate);
+        nextNotification.setDate(nextNotification.getDate() + frequencyMap[value.frequency]);
+
+        // Save medication with notification date
         const newMedication = await MedicationModel.create({
             ...value,
-            user: req.auth.id
+            user: req.auth.id,
+            nextNotification
         });
 
-        // Return a success response with the recorded entry object 
         res.status(201).json({
             message: `Your medication "${newMedication.name}" was recorded successfully!`,
-            symptom: newMedication
+            medication: newMedication
         });
-
-
-        // Pass the error to the error-handling middleware
     } catch (error) {
         next(error);
-
     }
-}
+};
+
 
 export const updateMedication = async (req, res, next) => {
     try {
