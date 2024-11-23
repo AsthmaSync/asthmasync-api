@@ -49,6 +49,24 @@ export const addInhaler = async (req, res, next) => {
     }
 };
 
+export const getAllInhalers = async (req, res, next) => {
+    try {
+        const inhalers = await InhalerModel.find(); // Fetches all inhalers from the database
+
+        if (!inhalers.length) {
+            return res.status(404).json({ message: 'No inhalers found.' });
+        }
+
+        res.status(200).json({
+            message: 'Inhalers retrieved successfully.',
+            inhalers, // Send all inhalers
+        });
+    } catch (error) {
+        next(error); // Pass error to the error-handling middleware
+    }
+};
+
+
 
 
 

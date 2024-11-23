@@ -3,6 +3,7 @@ import { model, Schema, Types } from "mongoose";
 const InhalerSchema = new Schema({
     user: { type: Types.ObjectId, ref: 'User', required: true },
     inhalerName: { type: String, required: true },
+    avatar : {type : String},
     oriTotal: { type: Number, min: 1, required: true }, // Fixed total puffs
     newTotal: { type: Number, min: 1 }, // Remaining puffs, initialized to oriTotal (not required initially)
     date: { type: Date, default: Date.now }
